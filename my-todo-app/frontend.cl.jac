@@ -44,6 +44,7 @@ def:pub app -> any {
     async def fetchTodos -> None;
     async def addTodo -> None;
     async def toggleTodo(todoId: str) -> None;
+    async def setPriority(todoId: str, priority: str) -> None;
     async def deleteTodo(todoId: str) -> None;
     async def handleLogin -> None;
     async def handleSignup -> None;
@@ -119,6 +120,7 @@ def:pub app -> any {
                                                         key={todo.id}
                                                         todo={todo}
                                                         onToggle={toggleTodo}
+                                                        onPriority={setPriority}
                                                         onDelete={deleteTodo}
                                                     /> for todo in todos
                                                 ]}

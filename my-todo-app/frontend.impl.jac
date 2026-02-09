@@ -15,7 +15,8 @@ impl app.addTodo -> None {
         "id": newTodo.id,
         "title": newTodo.title,
         "completed": newTodo.completed,
-        "category": newTodo.category
+        "category": newTodo.category,
+        "priority": newTodo.priority
     }]);
     newTodoText = "";
 }
@@ -26,11 +27,31 @@ impl app.toggleTodo(todoId: str) -> None {
         lambda t: any -> any {
             if t.id == todoId {
                 return {
-                    "id": t.id, "title": t.title,
-                    "completed": not t.completed, "category": t.category
+                    "id": t.id,
+                    "title": t.title,
+                    "completed": not t.completed,
+                    "category": t.category,
+                    "priority": t.priority
                 };
             }
             return t;
+        }
+    );
+}
+
+impl app.setPriority(todoId: str, priority: str) -> None {
+    root spawn SetPriority(todo_id=todoId, priority=priority);
+    todos = todos.map(
+        lambda t: any -> any {
+            if t.id == todoId {
+                return {
+                    "id": t.id,
+                    "title": t.title,
+                    "completed": t.completed,
+                    "category": t.category,
+                    "priority": priority
+                };
+            }
         }
     );
 }

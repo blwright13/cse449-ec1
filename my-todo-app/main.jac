@@ -43,7 +43,8 @@ node Todo {
     has id: str,
         title: str,
         completed: bool = False,
-        category: str = "other";
+        category: str = "other",
+        priority: str = "low";
 }
 
 node MealIngredient {
@@ -59,7 +60,7 @@ node MealIngredient {
 walker:priv AddTodo {
     has title: str;
 
-    can create with `root entry {
+    can create with Root entry {
         category = str(categorize(self.title)).split(".")[-1].lower();
         new_todo = here ++> Todo(
             id=str(uuid4()),
@@ -70,7 +71,8 @@ walker:priv AddTodo {
             "id": new_todo[0].id,
             "title": new_todo[0].title,
             "completed": new_todo[0].completed,
-            "category": new_todo[0].category
+            "category": new_todo[0].category,
+            "priority": new_todo[0].priority
         };
     }
 }
@@ -78,7 +80,7 @@ walker:priv AddTodo {
 walker:priv ListTodos {
     has todos: list = [];
 
-    can collect with `root entry {
+    can collect with Root entry {
         visit [-->];
     }
 
@@ -87,11 +89,12 @@ walker:priv ListTodos {
             "id": here.id,
             "title": here.title,
             "completed": here.completed,
-            "category": here.category
+            "category": here.category,
+            "priority": here.priority
         });
     }
 
-    can report_all with `root exit {
+    can report_all with Root exit {
         report self.todos;
     }
 }
@@ -99,7 +102,7 @@ walker:priv ListTodos {
 walker:priv ToggleTodo {
     has todo_id: str;
 
-    can search with `root entry {
+    can search with Root entry {
         visit [-->];
     }
 
@@ -114,10 +117,29 @@ walker:priv ToggleTodo {
     }
 }
 
+walker:priv SetPriority {
+    has todo_id: str,
+        priority: str;
+
+    can search with Root entry {
+        visit [-->];
+    }
+
+    can update with Node entry {
+        if here.id == self.todo_id {
+            here.priority = self.priority;
+            report {
+                "id": here.id,
+                "priority": here.priority
+            };
+        }
+    }
+}
+
 walker:priv DeleteTodo {
     has todo_id: str;
 
-    can search with `root entry {
+    can search with Root entry {
         visit [-->];
     }
 
@@ -134,7 +156,7 @@ walker:priv DeleteTodo {
 walker:priv GenerateShoppingList {
     has meal_description: str;
 
-    can generate with `root entry {
+    can generate with Root entry {
         # First clear old ingredients
         visit [-->];
         # Then generate new ones
@@ -168,7 +190,7 @@ walker:priv GenerateShoppingList {
 walker:priv ListMealPlan {
     has ingredients: list = [];
 
-    can collect with `root entry {
+    can collect with Root entry {
         visit [-->];
     }
 
@@ -182,13 +204,13 @@ walker:priv ListMealPlan {
         });
     }
 
-    can report_all with `root exit {
+    can report_all with Root exit {
         report self.ingredients;
     }
 }
 
 walker:priv ClearMealPlan {
-    can collect with `root entry {
+    can collect with Root entry {
         visit [-->];
     }
 
