@@ -161,3 +161,52 @@ body {
     animation: spin 0.8s linear infinite; margin: 0 auto 0.75rem;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+.priority-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.priority-dropdown-selected {
+  background: #f4f6fa;
+  border: 1px solid #bfcbe2;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #2b354b;
+  display: flex;
+  align-items: center;
+}
+
+.priority-dropdown-arrow {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.priority-dropdown-list {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #fff;
+  border: 1px solid #bfcbe2;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(44, 60, 73, 0.13);
+  width: 100px;
+  padding: 0;
+  list-style: none;
+  margin: 4px 0 0 0;
+  z-index: 1;
+}
+
+.priority-dropdown-option {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #2b354b;
+}
+
+.priority-dropdown-option.selected {
+  background: #dde5f7;
+  font-weight: bold;
+}

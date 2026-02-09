@@ -44,7 +44,7 @@ node Todo {
         title: str,
         completed: bool = False,
         category: str = "other",
-        priority: str = "low";
+        priority: str = "Low";
 }
 
 node MealIngredient {
