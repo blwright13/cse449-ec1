@@ -125,7 +125,7 @@ walker:priv SetPriority {
         visit [-->];
     }
 
-    can update with Node entry {
+    can update with Todo entry {
         if here.id == self.todo_id {
             here.priority = self.priority;
             report {
