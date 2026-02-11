@@ -1,4 +1,8 @@
 env/
+venv/
+jac-env/
+
 .jac/
+
 .cursor/
 .vscode/
