@@ -52,6 +52,7 @@ impl app.setPriority(todoId: str, priority: str) -> None {
                     "priority": priority
                 };
             }
+            return t;
         }
     );
 }
